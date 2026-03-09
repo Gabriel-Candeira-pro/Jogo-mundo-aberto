@@ -1,3 +1,6 @@
+import Phaser from 'phaser';
+import { dataManager } from '../data/DataManagerHybrid.js';
+
 // Cena de Pré-carregamento - cria assets dinâmicos
 export class PreloadScene extends Phaser.Scene {
     constructor() {
@@ -6,14 +9,54 @@ export class PreloadScene extends Phaser.Scene {
 
     preload() {
         // Não precisamos carregar assets - usaremos gráficos dinâmicos
+        
+        // Mostra texto de carregamento
+        const width = this.scale.width;
+        const height = this.scale.height;
+        
+        this.loadingText = this.add.text(width / 2, height / 2, 'Carregando...', {
+            fontSize: '32px',
+            fill: '#00b300',
+            fontFamily: 'Arial'
+        }).setOrigin(0.5);
     }
 
-    create() {
-        this.createPlayerTexture();
-        this.createPlatformTexture();
-        this.createStarTexture();
-        this.createEnemyTexture();
-        this.scene.start('GameScene');
+    async create() {
+        try {
+            // Aguarda a inicialização do DataManager
+            this.loadingText.setText('Carregando dados do servidor...');
+            const initialized = await Promise.race([
+                dataManager.waitForInit(),
+                new Promise((_, reject) => {
+                    this.time.delayedCall(12000, () => {
+                        reject(new Error('Tempo limite excedido ao inicializar jogo'));
+                    });
+                })
+            ]);
+            
+            if (!initialized) {
+                throw new Error('Falha ao inicializar dados do jogo');
+            }
+            
+            this.loadingText.setText('Criando texturas...');
+            this.createPlayerTexture();
+            
+            this.loadingText.setText('Iniciando jogo...');
+            
+            // Pequeno delay para mostrar a mensagem
+            this.time.delayedCall(500, () => {
+                this.scene.start('GameScene');
+            });
+        } catch (error) {
+            console.error('❌ Erro ao carregar jogo:', error);
+            this.loadingText.setText('Erro ao carregar! Voltando ao login...');
+            this.loadingText.setColor('#ff0000');
+            
+            // Volta para tela de login após 2 segundos
+            this.time.delayedCall(2000, () => {
+                this.scene.start('LoginScene');
+            });
+        }
     }
 
     createPlayerTexture() {
@@ -24,27 +67,4 @@ export class PreloadScene extends Phaser.Scene {
         graphics.destroy();
     }
 
-    createPlatformTexture() {
-        const platformGraphics = this.make.graphics({ x: 0, y: 0, add: false });
-        platformGraphics.fillStyle(0x888888);
-        platformGraphics.fillRect(0, 0, 400, 24);
-        platformGraphics.generateTexture('platform', 400, 24);
-        platformGraphics.destroy();
-    }
-
-    createStarTexture() {
-        const starGraphics = this.make.graphics({ x: 0, y: 0, add: false });
-        starGraphics.fillStyle(0xffff00);
-        starGraphics.fillCircle(8, 8, 8);
-        starGraphics.generateTexture('star', 16, 16);
-        starGraphics.destroy();
-    }
-
-    createEnemyTexture() {
-        const enemyGraphics = this.make.graphics({ x: 0, y: 0, add: false });
-        enemyGraphics.fillStyle(0xff0000);
-        enemyGraphics.fillRect(0, 0, 32, 32);
-        enemyGraphics.generateTexture('enemy', 32, 32);
-        enemyGraphics.destroy();
-    }
 }

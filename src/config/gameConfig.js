@@ -1,11 +1,14 @@
+import Phaser from 'phaser';
+
 // Configuração do Phaser - Responsivo e Multi-plataforma
 export const gameConfig = {
     type: Phaser.AUTO,
     physics: {
         default: 'arcade',
         arcade: {
-            gravity: { y: 300 },
-            debug: false
+            gravity: { y: 0, x: 0 },
+            debug: false,
+            worldBounds: { x: 0, y: 0, width: 1200, height: 800 }
         }
     },
     scale: {

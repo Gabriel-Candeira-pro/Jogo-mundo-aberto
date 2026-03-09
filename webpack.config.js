@@ -9,8 +9,13 @@ module.exports = {
   },
   devServer: {
     static: {
-      directory: path.join(__dirname, '.'),
+      // Serve only built/static files to avoid reload loops caused by backend data writes.
+      directory: path.join(__dirname, 'dist'),
+      watch: {
+        ignored: ['**/server/data/**', '**/node_modules/**'],
+      },
     },
+    watchFiles: ['src/**/*', 'index.html'],
     compress: true,
     port: 8080,
     hot: true,
@@ -21,6 +26,13 @@ module.exports = {
       'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, PATCH, OPTIONS',
       'Access-Control-Allow-Headers': 'X-Requested-With, content-type, Authorization',
     },
+    proxy: [
+      {
+        context: ['/api'],
+        target: 'http://localhost:3000',
+        changeOrigin: true,
+      },
+    ],
   },
   plugins: [
     new HtmlWebpackPlugin({

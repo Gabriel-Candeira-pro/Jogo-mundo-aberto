@@ -1,0 +1,9 @@
+# Dados do servidor
+data/
+
+# Logs
+*.log
+npm-debug.log*
+
+# Runtime
+.env

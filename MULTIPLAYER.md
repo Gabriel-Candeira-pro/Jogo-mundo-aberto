@@ -66,10 +66,10 @@ POST /api/players/heartbeat   // Mantém jogador ativo
 ```
 
 **Dados armazenados:**
-- `global_map.json` - Mapa único compartilhado
-- `active_players.json` - Lista de jogadores online
-- `character_[userId].json` - Personagem de cada jogador
-- `userdata_[userId].json` - Dados de cada jogador
+- `server/data/map/global_map/` - Mapa único compartilhado (modularizado)
+- `server/data/map/active_players.json` - Lista de jogadores online
+- `server/data/users/[userId]/character.json` - Personagem de cada jogador
+- `server/data/users/[userId]/userdata.json` - Dados de cada jogador
 
 ### Frontend (Client)
 
@@ -128,7 +128,7 @@ O mapa global é criado automaticamente na primeira execução:
 
 ### Modificando o Mapa Global
 
-Para alterar o mapa global, edite diretamente `server/data/global_map.json` ou use a API:
+Para alterar o mapa global, edite os chunks em `server/data/map/global_map/` ou use a API:
 
 ```javascript
 POST /api/map/global

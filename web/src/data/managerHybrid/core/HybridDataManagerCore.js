@@ -13,6 +13,7 @@ export class HybridDataManagerCore {
         this.initialized = false;
         this.initPromise = null;
         this.savedMaps = [];
+        this.lastInitError = null;
         this.initPromise = this.init();
     }
 }

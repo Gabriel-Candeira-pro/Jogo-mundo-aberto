@@ -49,7 +49,8 @@ export class PreloadScene extends Phaser.Scene {
             });
         } catch (error) {
             console.error('❌ Erro ao carregar jogo:', error);
-            this.loadingText.setText('Erro ao carregar! Voltando ao login...');
+            const initError = dataManager.lastInitError || error?.message || 'Erro desconhecido';
+            this.loadingText.setText(`Erro ao carregar: ${initError}`);
             this.loadingText.setColor('#ff0000');
             
             // Volta para tela de login após 2 segundos

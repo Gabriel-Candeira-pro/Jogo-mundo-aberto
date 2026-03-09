@@ -4,6 +4,18 @@ import { Map } from '../../models/Map.js';
 import { apiClient } from '../../APIClient.js';
 import { authManager } from '../../AuthManager.js';
 
+function hasRenderableMapStructure(map) {
+    return (
+        (Array.isArray(map.buildings) && map.buildings.length > 0) ||
+        (Array.isArray(map.roads) && map.roads.length > 0) ||
+        (Array.isArray(map.obstacles) && map.obstacles.length > 0) ||
+        (Array.isArray(map.water) && map.water.length > 0) ||
+        (Array.isArray(map.npcs) && map.npcs.length > 0) ||
+        (Array.isArray(map.collectibles) && map.collectibles.length > 0) ||
+        (Array.isArray(map.platforms) && map.platforms.length > 0)
+    );
+}
+
 /**
  * Métodos de inicialização e carga remota
  */
@@ -13,6 +25,7 @@ export function attachInitializationMethods(HybridDataManagerClass) {
      */
     HybridDataManagerClass.prototype.init = async function init() {
         try {
+            this.lastInitError = null;
             this.onlineMode = await authManager.checkAuthStatus();
 
             if (!this.onlineMode) {
@@ -29,6 +42,7 @@ export function attachInitializationMethods(HybridDataManagerClass) {
             return true;
         } catch (error) {
             console.error('❌ Erro ao inicializar DataManager:', error);
+            this.lastInitError = error?.message || 'Erro ao inicializar dados';
             this.initialized = false;
             this.initPromise = null;
             throw error;
@@ -77,11 +91,21 @@ export function attachInitializationMethods(HybridDataManagerClass) {
 
             try {
                 const mapData = await apiClient.loadGlobalMap();
-                this.currentMap = mapData.data ? Map.fromJSON(mapData.data) : this.createDefaultMap();
+                if (!mapData?.data) {
+                    throw new Error('API retornou mapa global vazio');
+                }
+
+                this.currentMap = Map.fromJSON(mapData.data);
+
+                if (!hasRenderableMapStructure(this.currentMap)) {
+                    throw new Error('Mapa global sem estruturas renderizaveis');
+                }
+
                 console.log(`🗺️  Mapa global carregado: ${this.currentMap.name}`);
             } catch (error) {
                 console.error('Erro ao carregar mapa global:', error);
-                this.currentMap = this.createDefaultMap();
+                this.currentMap = null;
+                throw new Error('Falha ao carregar mapa global do servidor');
             }
 
             console.log('✅ Dados carregados do servidor');

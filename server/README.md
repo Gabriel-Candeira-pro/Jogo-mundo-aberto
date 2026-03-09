@@ -199,12 +199,22 @@ Os dados são armazenados em arquivos JSON no diretório `server/data/`:
 
 ```
 server/data/
-├── users.json                    # Lista de usuários
-├── character_[userId].json       # Personagem do usuário
-├── userdata_[userId].json        # Dados do usuário
-├── map_current_[userId].json     # Mapa atual
-├── maps_[userId].json            # Lista de mapas
-└── session_[userId].json         # Sessão atual
+├── users/
+│   ├── index.json                # Lista de usuários
+│   └── [userId]/
+│       ├── character.json        # Personagem do usuário
+│       ├── userdata.json         # Dados do usuário
+│       ├── map_current.json      # Mapa atual do usuário
+│       ├── maps.json             # Lista de mapas do usuário
+│       └── session.json          # Sessão atual do usuário
+└── map/
+    ├── active_players.json       # Jogadores ativos
+    ├── global_map.json           # Legado (fallback/migração)
+    └── global_map/               # Mapa global modularizado
+        ├── meta.json
+        ├── world.json
+        ├── entities.json
+        └── layout.json
 ```
 
 ## 🛠️ Configuração

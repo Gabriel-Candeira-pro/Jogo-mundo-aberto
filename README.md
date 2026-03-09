@@ -234,11 +234,17 @@ Gayme/
 │   ├── README.md                  # Documentação da API
 │   ├── test-api.sh                # Script de teste dos endpoints
 │   └── data/
-│       ├── users.json             # Usuários registrados
-│       ├── active_players.json    # Jogadores online
-│       ├── global_map.json        # Mapa global compartilhado
-│       ├── character_*.json       # Dados de personagem por usuário
-│       └── userdata_*.json        # Dados de progresso por usuário
+│       ├── users/
+│       │   ├── index.json         # Usuários registrados
+│       │   └── [userId]/          # Dados por usuário
+│       └── map/
+│           ├── active_players.json # Jogadores online
+│           ├── global_map.json     # Legado (fallback/migração)
+│           └── global_map/         # Mapa global modularizado
+│               ├── meta.json
+│               ├── world.json
+│               ├── entities.json
+│               └── layout.json
 └── src/
     ├── game.js                    # Bootstrap do Phaser
     ├── config/

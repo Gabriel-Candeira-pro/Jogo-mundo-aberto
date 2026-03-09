@@ -9,8 +9,55 @@ export function attachMapMethods(HybridDataManagerClass) {
      * @deprecated Em modo multiplayer, o mapa é global e criado automaticamente
      */
     HybridDataManagerClass.prototype.createDefaultMap = function createDefaultMap() {
-        console.warn('createDefaultMap() não é usado em multiplayer - o mapa global é carregado do servidor');
-        return new Map({ name: 'Arena Multiplayer', level: 1 });
+        console.warn('Usando mapa de fallback local (falha temporária ao carregar mapa global do servidor).');
+        return new Map({
+            name: 'Village Medieval (Fallback)',
+            level: 1,
+            gameType: 'topdown',
+            width: 1200,
+            height: 800,
+            skyColor: '#87CEEB',
+            terrain: { type: 'grass', textColor: '#228B22' },
+            playerSpawn: { x: 600, y: 400 },
+            buildings: [
+                {
+                    id: 'fallback_house_1',
+                    name: 'Casa',
+                    x: 120,
+                    y: 150,
+                    width: 120,
+                    height: 100,
+                    type: 'house',
+                    collision: true
+                },
+                {
+                    id: 'fallback_tower_1',
+                    name: 'Torre',
+                    x: 850,
+                    y: 100,
+                    width: 100,
+                    height: 150,
+                    type: 'tower',
+                    collision: true
+                }
+            ],
+            roads: [
+                {
+                    id: 'fallback_road_main',
+                    name: 'Estrada Principal',
+                    x: 0,
+                    y: 360,
+                    width: 1200,
+                    height: 80,
+                    type: 'dirt_road',
+                    walkable: true
+                }
+            ],
+            obstacles: [],
+            water: [],
+            npcs: [],
+            collectibles: []
+        });
     };
 
     /**

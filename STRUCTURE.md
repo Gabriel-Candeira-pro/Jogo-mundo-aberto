@@ -42,10 +42,17 @@ Gayme/  (Monorepo)
 ├── 🖥️  server/                      # Backend Compartilhado (Node.js + Express)
 │   ├── server.js                   # Servidor principal
 │   ├── data/                       # Banco de dados JSON
-│   │   ├── users.json             # Usuários
-│   │   ├── global_map.json        # Mapa global
-│   │   ├── active_players.json    # Jogadores online
-│   │   └── *.json                 # Dados de personagens
+│   │   ├── users/                 # Dados por usuário
+│   │   │   ├── index.json         # Usuários
+│   │   │   └── [userId]/          # Arquivos individuais
+│   │   └── map/
+│   │       ├── active_players.json # Jogadores online
+│   │       ├── global_map.json     # Legado (fallback/migração)
+│   │       └── global_map/         # Mapa global modularizado
+│   │           ├── meta.json
+│   │           ├── world.json
+│   │           ├── entities.json
+│   │           └── layout.json
 │   └── README.md                   # Docs backend
 │
 ├── 🔧 scripts/                      # Scripts auxiliares
@@ -84,7 +91,7 @@ Expo Go → Metro Bundler → React Native App
 ### Sincronização
 ```
 Web Player ──┐
-             ├── Backend (server.js) ── global_map.json
+             ├── Backend (server.js) ── map/global_map/*.json
 Mobile Player┘
 ```
 

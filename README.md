@@ -1,287 +1,146 @@
 # Gayme - Jogo Multiplayer Online 🌍
 
-> **IMPORTANTE:** Este jogo agora é **EXCLUSIVAMENTE MULTIPLAYER**!  
-> Todos os jogadores compartilham o mesmo mapa global.  
-> Login obrigatório - Não há mais modo offline.
+> **IMPORTANTE:** este jogo é exclusivamente multiplayer.
+> Todos os jogadores compartilham o mesmo mapa global.
+> Login obrigatório - não há mais modo offline.
 
-📖 **[Leia a documentação completa do Multiplayer](MULTIPLAYER.md)**
+[Leia a documentação completa do Multiplayer](MULTIPLAYER.md)
 
 ---
 
-## 🎮 MODO MULTIPLAYER
+## 🎮 Modo Multiplayer
 
-- ✅ **Mapa Global Único** - Todos os jogadores no mesmo mapa
-- ✅ **Login Obrigatório** - Crie uma conta para jogar
-- ✅ **Jogadores Online** - Veja quantos estão jogando
-- ✅ **Servidor Obrigatório** - Backend deve estar rodando
+- Mapa global único
+- Login obrigatório
+- Jogadores online
+- Servidor backend obrigatório
 
-### 🚀 Quick Start Multiplayer
+### Quick Start Multiplayer
 
 ```bash
-# Terminal 1 - Servidor Backend (OBRIGATÓRIO)
+# Terminal 1 - Backend (obrigatório)
 npm run dev:server
 
-# Terminal 2 - Cliente do Jogo
+# Terminal 2 - Frontend
 npm run dev
 
 # Abra http://localhost:8080
-# Crie uma conta e comece a jogar!
+# Crie sua conta e jogue
 ```
 
 ---
 
-Um jogo 2D criado com Phaser que funciona perfeitamente em **mobile** e **desktop**.
+## 🌐 Backend Multiplayer
 
-## � NOVO: Backend com Armazenamento em Servidor! 🌐
+O backend foi organizado para sustentar multiplayer persistente:
 
-O jogo agora possui um **sistema completo de backend** que permite:
+- Autenticação com JWT
+- Registro e login de usuários
+- Persistência de personagem e progresso no servidor
+- Mapa global compartilhado entre todos os jogadores
+- Controle de jogadores online com heartbeat
 
-- 🔐 **Login e Registro** de usuários
-- ☁️ **Sincronização em nuvem** - Jogue em qualquer dispositivo
-- 💾 **Auto-save em servidor** - Nunca perca seu progresso
-- 🌍 **Modo Híbrido** - Funciona offline e online
-- 📊 **API REST completa** com autenticação JWT
+Quick start:
 
-**🚀 Quick Start com Backend:**
 ```bash
 npm install
 npm run full
-# Abra http://localhost:8080 → Login/Registro
 ```
 
-📖 **Documentação:** [QUICKSTART.md](QUICKSTART.md) | [server/README.md](server/README.md) | [INSTALACAO_BACKEND.md](INSTALACAO_BACKEND.md)
+Documentação complementar:
+- [QUICKSTART.md](QUICKSTART.md)
+- [server/README.md](server/README.md)
+- [INSTALACAO_BACKEND.md](INSTALACAO_BACKEND.md)
 
----
+## ✨ Características
 
-## �🎮 Características
-
-- ✅ **Responsivo**: Funciona em qualquer tamanho de tela (mobile, tablet, desktop)
-- ✅ **Multi-input**: Suporte a teclado (desktop) e touch (mobile)
-- ✅ **Auto-scaling**: Jogo se adapta automaticamente ao redimensionar a janela (escala FIT)
-- ✅ **Arquitetura modular**: Cenas e configurações organizadas em arquivos separados
-- ✅ **Otimizado**: Phaser 3.55 com webpack para melhor performance
-- ✅ **Pronto para jogar**: Exemplo completo de jogo jogável
-- ✅ **Sistema de dados**: Armazenamento de personagem, usuário e mapas com auto-save
-- ✅ **Progressão**: Sistema de XP, níveis e conquistas
-- ✅ **Customização**: Personalize personagens, mapas e dificuldade via código
+- Responsivo: mobile, tablet e desktop
+- Multi-input: teclado e touch
+- Auto-scaling com Phaser (FIT)
+- Arquitetura modular por camadas
+- Build com webpack
+- Sistema de dados com persistência no servidor
 
 ## 📋 Como Jogar
 
 ### Desktop
-- **Setas ← →**: Mover para os lados
-- **Seta ↑ ou Espaço**: Pular
-- **Objetivo**: Coletar todas as estrelas e evitar os inimigos vermelhos
+- Setas esquerda/direita: mover
+- Seta para cima ou espaço: pular
+- Objetivo: coletar estrelas e evitar inimigos
 
 ### Mobile
-- **Toque lado esquerdo**: Mover para a esquerda
-- **Toque lado direito**: Mover para a direita
-- **Toque no topo**: Pular
-- **Objetivo**: Coletar todas as estrelas e evitar os inimigos vermelhos
+- Toque no lado esquerdo: mover para esquerda
+- Toque no lado direito: mover para direita
+- Toque na parte superior: pular
+- Objetivo: coletar estrelas e evitar inimigos
 
 ## 🚀 Quick Start
 
-### Opção 1: Executar diretamente (Recomendado)
+### Opção 1: rodar tudo junto (recomendado)
 
 ```bash
-# Abrir no navegador
-open index.html
-```
-
-Ou coloque o arquivo em um servidor HTTP local:
-
-```bash
-# Python 3
-python -m http.server 8000
-
-# Ou com Node.js (requer http-server)
-npx http-server
-```
-
-Depois acesse: http://localhost:8000
-
-### Opção 2: Com webpack (para desenvolvimento avançado)
-
-```bash
-# Instalar dependências
 npm install
-
-# Rodar servidor de desenvolvimento
-npm run dev
-
-# Buildar para produção
-npm run build
-```
-
-### Opção 3: Com Backend (Modo Online) 🌐
-
-Para habilitar jogabilidade online com armazenamento em servidor:
-
-```bash
-# Instalar dependências
-npm install
-
-# Opção 1: Rodar servidor + frontend juntos
 npm run full
+```
 
-# Opção 2: Rodar separadamente
-# Terminal 1: Backend
-npm run server
+### Opção 2: rodar separado (desenvolvimento)
 
-# Terminal 2: Frontend
+```bash
+# Terminal 1
+npm run dev:server
+
+# Terminal 2
 npm run dev
 ```
 
-**O que você ganha com o modo online:**
-- 🔄 **Sincronização entre dispositivos**: Jogue no PC, continue no celular
-- 💾 **Backup em servidor**: Seus dados nunca se perdem
-- 🏆 **Ranking global**: Compare com outros jogadores (futuro)
-- 👥 **Multiplayer**: Base para funcionalidades multiplayer (futuro)
-- 📊 **Estatísticas centralizadas**: Acesse de qualquer lugar
+Fluxo obrigatório:
+1. Backend ativo em `localhost:3000`
+2. Frontend ativo em `localhost:8080`
+3. Login/registro na tela inicial
+4. Entrada no mapa global
 
-**Como usar:**
-1. Inicie o servidor backend (porta 3000)
-2. Inicie o frontend (porta 8080)
-3. No jogo, faça login/registro na tela inicial
-4. Seus dados serão automaticamente sincronizados!
+## 🔗 Compartilhar Publicamente
 
-**📖 Documentação completa do backend:**
-- Veja [server/README.md](server/README.md) para API completa
-- Endpoints REST documentados
-- Autenticação JWT
-- Deploy para produção
-
-## 🌐 Compartilhar Publicamente com ngrok
-
-Para acessar seu jogo de qualquer lugar usando ngrok (recomendado para teste remoto):
-
-### Pré-requisitos
-- Ter uma conta no [ngrok](https://ngrok.com) (gratuita)
-- ngrok instalado e autenticado: `ngrok authtoken SEU_TOKEN`
-- As dependências do projeto instaladas: `npm install`
-
-### Executar com ngrok
+### Recomendado: Cloudflare Tunnel
 
 ```bash
-# Método 1: Usar o script automático (recomendado)
+# Com frontend ativo em localhost:8080
+cloudflared tunnel --url http://localhost:8080
+```
+
+### Alternativa: ngrok
+
+```bash
 npm run dev:ngrok
-
-# Método 2: Executar manualmente
-node scripts/ngrok.js
 ```
 
-**O que acontece automaticamente:**
-1. ✅ Compila o webpack em modo desenvolvimento
-2. ✅ Inicia servidor de desenvolvimento na porta 8080
-3. ✅ Cria um túnel ngrok automático
-4. ✅ Exibe a URL pública (ex: `https://abc123def456.ngrok.io`)
-5. ✅ Monitora alterações e recarrega automáticamente
+## 💾 Sistema de Armazenamento de Dados
 
-**Como usar:**
-- Compartilhe a URL pública com qualquer pessoa
-- Qualquer pessoa pode jogar sem instalar nada
-- A URL muda a cada novo comando (exceto com plano pago ngrok)
+O armazenamento é orientado a servidor para manter progresso por conta.
 
-**Dica de ouro**: Manter o terminal aberto enquanto estiver desenvolvendo permite que outras pessoas vejam as mudanças em tempo real!
+### O que é armazenado?
 
-## � Sistema de Armazenamento de Dados
+- Personagem: nível, experiência, moedas, atributos
+- Usuário: score, estatísticas, conquistas
+- Sessão: estado e presença online
+- Mapa global: configuração compartilhada
 
-O jogo agora possui um **sistema completo de armazenamento de dados** que salva automaticamente no navegador:
+### Funcionalidades
 
-### 📦 O que é armazenado?
+- Auto-save no servidor
+- Sincronização entre dispositivos
+- Progressão persistente por usuário
+- Estatísticas centralizadas
 
-- **👤 Personagem**: Atributos, nível, experiência, moedas, velocidade, poder de pulo
-- **👥 Usuário**: Pontuação, estatísticas, conquistas, configurações
-- **🗺️ Mapas**: Configurações de níveis, plataformas, inimigos, estrelas
+### Modo de Jogo
 
-### ✨ Funcionalidades
-
-- 🔄 **Auto-save**: Dados salvos automaticamente após cada partida
-- 📊 **Estatísticas**: Rastreamento completo de desempenho
-- 🎯 **Conquistas**: Sistema de achievements baseado em marcos
-- 🎨 **Customização**: Personalize personagem, mapas e dificuldade
-- 💪 **Progressão**: Sistema de XP e level up para personagem
-- 📈 **Histórico**: Mantenha registro de todas as partidas
-- 🌐 **Modo Híbrido**: Funciona offline (localStorage) e online (servidor)
-- ☁️ **Sincronização**: Dados sincronizados automaticamente entre dispositivos (modo online)
-
-### 🎮 Modos de Jogo
-
-#### Modo Offline (Padrão)
-- Dados salvos no navegador (localStorage)
-- Funciona sem internet
-- Não requer registro
-- Dados específicos do dispositivo/navegador
-
-#### Modo Online (Opcional)
-- Dados salvos em servidor
-- Sincroniza entre dispositivos
-- Requer login/registro
-- Acesse de qualquer lugar
-- Backup automático em servidor
-
-**Como ativar modo online:**
-1. Inicie o servidor: `npm run server`
-2. Na tela inicial do jogo, clique em "Login/Registro"
-3. Crie uma conta ou faça login
-4. Pronto! Seus dados serão sincronizados automaticamente
-
-### 🛠️ Como Usar
-
-**No Console do Navegador (F12):**
-
-```javascript
-// Ver informações atuais
-dataManager.getCharacter();  // Ver personagem
-dataManager.getUser();        // Ver usuário
-dataManager.getMap();         // Ver mapa atual
-
-// Customizar personagem
-dataManager.updateCharacter({
-    name: 'Super Herói',
-    speed: 250,
-    jumpPower: 400,
-    color: 0xFF0000  // Vermelho
-});
-
-// Ver estatísticas
-const user = dataManager.getUser();
-console.log('High Score:', user.highScore);
-console.log('Partidas:', user.gamesPlayed);
-console.log('Taxa de Vitória:', user.getWinRate() + '%');
-
-// Criar mapa customizado
-const novoMapa = dataManager.createCustomMap({
-    name: 'Meu Nível',
-    difficulty: 'hard',
-    enemies: [/* ... */],
-    platforms: [/* ... */]
-});
-dataManager.setCurrentMap(novoMapa);
-
-// Fazer backup
-const backup = dataManager.exportData();
-console.log(JSON.stringify(backup));
-
-// Limpar dados
-dataManager.clearAllData();
-```
-
-**📖 Documentação Completa:**
-- Veja [GUIA_DADOS.md](GUIA_DADOS.md) para documentação detalhada
-- Exemplos prontos em [src/data/examples.js](src/data/examples.js)
-
-### 🎮 Dados Visíveis no Jogo
-
-Durante o jogo, você verá:
-- Nome e nível do personagem
-- Nome de usuário e high score
-- Nome do mapa atual
-- Estatísticas ao finalizar (tempo, pulos, estrelas)
-- Experiência ganha após cada partida
+- Somente multiplayer online
+- Login obrigatório
+- Backend ativo durante a partida
 
 ## 🗂️ Estrutura do Projeto (Nova Arquitetura)
 
-```
+```text
 Gayme/
 ├── index.html                     # Entrada HTML do cliente
 ├── package.json                   # Scripts e dependências
@@ -292,7 +151,7 @@ Gayme/
 ├── GUIA_DADOS.md                  # Documentação do sistema de dados
 ├── INSTALACAO_BACKEND.md          # Instalação/configuração do backend
 ├── scripts/
-│   └── ngrok.js                   # Exposição pública local via ngrok
+│   └── ngrok.js                   # Exposição pública via ngrok
 ├── server/
 │   ├── server.js                  # API REST (auth, mapa global, players)
 │   ├── README.md                  # Documentação da API
@@ -317,7 +176,7 @@ Gayme/
         ├── index.js               # Facade pública da camada de dados
         ├── APIClient.js           # Cliente de API de alto nível
         ├── AuthManager.js         # Sessão/token/autenticação
-        ├── DataManager.js         # Fallback/local manager
+        ├── DataManager.js         # Manager local/fallback
         ├── DataManagerHybrid.js   # Orquestração cliente + backend
         ├── examples.js            # Exemplos de uso no console
         ├── models/
@@ -326,107 +185,53 @@ Gayme/
         │   └── Map.js             # Entidade de mapa
         ├── api/
         │   ├── core/
-        │   │   └── APIClientCore.js  # HTTP core (fetch, headers, erros)
+        │   │   └── APIClientCore.js
         │   └── modules/
-        │       ├── auth.js        # Endpoints de autenticação
-        │       ├── backup.js      # Backup/restore
-        │       ├── character.js   # Endpoints de personagem
-        │       ├── health.js      # Health check
-        │       ├── map.js         # Endpoints de mapa global/multiplayer
-        │       ├── session.js     # Sessão/heartbeat
-        │       └── user.js        # Endpoints de usuário
+        │       ├── auth.js
+        │       ├── backup.js
+        │       ├── character.js
+        │       ├── health.js
+        │       ├── map.js
+        │       ├── session.js
+        │       └── user.js
         └── manager/
             ├── core/
-            │   └── DataManagerCore.js # Núcleo do gerenciador
+            │   └── DataManagerCore.js
             └── modules/
-                ├── character.js   # Regras de personagem
-                ├── map.js         # Regras de mapa
-                ├── session.js     # Regras de sessão
-                ├── user.js        # Regras de usuário
-                └── utility.js     # Utilitários compartilhados
+                ├── character.js
+                ├── map.js
+                ├── session.js
+                ├── user.js
+                └── utility.js
 ```
-
-## 🔧 Customizações
-
-### Mudar tamanho da tela
-Edite a configuração em [src/config/gameConfig.js](src/config/gameConfig.js):
-```javascript
-scale: {
-    width: 800,         // Largura padrão
-    height: 600,        // Altura padrão
-    min: { width: 320, height: 240 },  // Tamanho mínimo
-    max: { width: 1920, height: 1440 } // Tamanho máximo
-}
-```
-
-### Ajustar dificuldade
-Edite [src/scenes/GameScene.js](src/scenes/GameScene.js):
-- Altere `gravity: { y: 300 }` para mudar a gravidade
-- Mude `velocidade dos inimigos` (propriedade `speed`)
-- Ajuste `velocidade do jogador` (propriedade `Velocity`)
-
-### Adicionar mais sprites
-Veja [src/scenes/PreloadScene.js](src/scenes/PreloadScene.js) para ver como criar gráficos dinâmicos.
-
-### Acessar controles
-Personalize os controles em [src/utils/controls.js](src/utils/controls.js)
 
 ## 📱 Teste em Smartphone
 
-1. **Local Network**: 
-   - Coloque o arquivo em um servidor HTTP
-   - Acesse pelo IP da sua máquina (ex: http://192.168.1.X:8000)
+1. Local Network:
+- Rode `npm run dev`
+- Acesse pelo IP da máquina na porta `8080`
 
-2. **Com Cloudflare Tunnel** (Recomendado):
-   ```bash
-   # Instale cloudflare tunnel
-   curl -L --output cloudflared.tgz https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64.tgz
-   tar xzf cloudflared.tgz
-   
-   # Crie um tunnel
-   ./cloudflared tunnel --url http://localhost:8000
-   ```
+2. Com Cloudflare Tunnel (recomendado):
 
-3. **Modo Fullscreen em Mobile**:
-   - Pressione F11 ou o botão de fullscreen do navegador
-   - Melhor experiência com a tela em modo landscape
+```bash
+cloudflared tunnel --url http://localhost:8080
+```
 
-## 🎨 Tecnologias
+3. Para melhor experiência:
+- Use modo fullscreen do navegador
+- Prefira orientação landscape
 
-- **Phaser 3.55**: Framework de jogos JavaScript
-- **Vanilla JavaScript**: Sem dependências desnecessárias
-- **Responsive Web Design**: CSS moderno para adaptabilidade
+## 🧰 Tecnologias
+
+- Phaser 3.55
+- Vanilla JavaScript
+- Node.js + Express
+- JWT + bcryptjs
+- Webpack
 
 ## 📚 Recursos
 
 - [Documentação Phaser](https://photonstorm.github.io/phaser3-docs/)
 - [Exemplos Phaser](https://phaser.io/examples)
-- [Community Phaser](https://www.html5gamedevs.com/)
-
-## 📝 Novidades nesta Atualização
-
-### ✨ Principais Melhorias
-- 🏗️ **Refatoração modular**: Código organizado em cenas e configurações separadas
-- ⚡ **Webpack integrado**: Build otimizado para produção e desenvolvimento
-- 📱 **Responsividade melhorada**: Escala FIT com suporte completo a múltiplas resoluções
-- 🎮 **Toque otimizado**: Controles touch refinados para melhor experiência mobile
-- 🚀 **ngrok automático**: Script para compartilhar o jogo facilmente
-- 💾 **Sistema de dados completo**: Armazenamento de personagem, usuário e mapas
-- 📊 **Estatísticas e conquistas**: Sistema de tracking e progressão
-- 🎨 **Customização total**: Personalize personagens, mapas e dificuldade
-- 🔄 **Auto-save**: Progresso salvo automaticamente no navegador
-- 📦 **Organização clara**: Estrutura escalável para adicionar novas features
-
-### 🎯 Próximos Passos
-
-Para expandir o jogo, considere adicionar:
-- Novos níveis com dificuldade progressiva
-- Sistema de sons e música de fundo
-- Particle effects para efeitos visuais
-- Animações mais complexas
-- Sistema de salas/levels (world/room)
-- Leaderboard local com localStorage
-- Sistema de power-ups
-- Inimigos com IA mais sofisticada
 
 ---

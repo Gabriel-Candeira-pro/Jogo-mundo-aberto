@@ -1,0 +1,15 @@
+{
+  "remote.portsAttributes": {
+    "8080": {
+      "label": "Frontend (webpack dev server)",
+      "onAutoForward": "openPreview",
+      "visibility": "public"
+    },
+    "3000": {
+      "label": "Backend (API server)",
+      "onAutoForward": "silent",
+      "visibility": "public"
+    }
+  },
+  "remote.autoForwardPortsSource": "process"
+}

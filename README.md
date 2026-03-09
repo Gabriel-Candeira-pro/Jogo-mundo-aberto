@@ -361,6 +361,30 @@ npm run dev:ngrok
 - Teste em modo anônimo/privado
 - Verifique a conexão de internet
 
+### Túnel do VS Code retorna HTTP 403 (acesso negado)
+
+O erro `HTTP ERROR 403 - Você não tem autorização para ver esta página` em URLs do tipo `*.devtunnels.ms` ocorre porque os **túneis do VS Code são privados por padrão** e exigem autenticação Microsoft/GitHub para acesso.
+
+**Solução 1 — Alterar visibilidade do túnel no VS Code (recomendado):**
+1. Abra o painel **Portas** (`Ctrl+Shift+P` → "Focus on Ports View") no VS Code
+2. Clique com o botão direito na porta `8080`
+3. Selecione **Visibilidade da Porta** → **Pública**
+4. Repita para a porta `3000` (backend)
+
+Agora qualquer pessoa pode acessar a URL gerada sem precisar de login.
+
+> Este repositório já inclui `.vscode/settings.json` e `.devcontainer/devcontainer.json` configurados para definir as portas 8080 e 3000 como **públicas automaticamente** ao abrir o projeto no VS Code ou Codespaces.
+
+**Solução 2 — Usar Cloudflare Tunnel (alternativa sem autenticação):**
+```bash
+cloudflared tunnel --url http://localhost:8080
+```
+
+**Solução 3 — Usar ngrok (alternativa):**
+```bash
+npm run dev:ngrok
+```
+
 ## 📡 Endpoints da API
 
 Para mais detalhes, consulte [server/README.md](server/README.md) ou execute:

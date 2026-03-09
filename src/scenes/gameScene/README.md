@@ -136,5 +136,5 @@ Cada arquivo tem uma unica responsabilidade:
 
 Os movimentos do jogador sao gerenciados em:
 - `modules/input/controls.js` - Captura entrada (teclado WASD + touch)
-- `modules/player/movement.js` - Aplica velocidade em `handleMovement()`
+- `modules/player/movement.js` - Aplica aceleração e desaceleração (drag) em `handleMovement()`
 - `src/utils/controls.js` - Logica de touch (esquerda/direita/pulo)

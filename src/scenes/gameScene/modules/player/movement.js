@@ -8,21 +8,29 @@ export function attachMovementMethods(GameSceneClass) {
         const upPressed = this.keys.W.isDown;
         const downPressed = this.keys.S.isDown;
 
-        let velocityX = 0;
-        let velocityY = 0;
+        const acceleration = this.character.speed * 6;
+
+        let accelX = 0;
+        let accelY = 0;
 
         if (leftPressed) {
-            velocityX = -this.character.speed;
+            accelX = -acceleration;
         } else if (rightPressed) {
-            velocityX = this.character.speed;
+            accelX = acceleration;
         }
 
         if (upPressed) {
-            velocityY = -this.character.speed;
+            accelY = -acceleration;
         } else if (downPressed) {
-            velocityY = this.character.speed;
+            accelY = acceleration;
         }
 
-        this.player.setVelocity(velocityX, velocityY);
+        if (accelX !== 0 && accelY !== 0) {
+            const norm = Math.SQRT2;
+            accelX /= norm;
+            accelY /= norm;
+        }
+
+        this.player.setAcceleration(accelX, accelY);
     };
 }

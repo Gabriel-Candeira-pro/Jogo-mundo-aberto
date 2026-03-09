@@ -15,6 +15,9 @@ export function attachPlayerSetupMethods(GameSceneClass) {
         this.physics.world.gravity.y = 0;
         this.physics.world.gravity.x = 0;
 
+        this.player.setDrag(900, 900);
+        this.player.setMaxVelocity(this.character.speed, this.character.speed);
+
         this.player.setTint(this.character.color);
 
         const debugCircle = this.add.circle(spawn.x, spawn.y, 20, 0x00FF00);

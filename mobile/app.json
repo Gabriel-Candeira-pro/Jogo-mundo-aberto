@@ -1,0 +1,30 @@
+{
+  "expo": {
+    "name": "Gayme Mobile",
+    "slug": "gayme-mobile",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "light",
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.gayme.mobile"
+    },
+    "android": {
+      "package": "com.gayme.mobile",
+      "versionCode": 1,
+      "permissions": [
+        "INTERNET",
+        "ACCESS_NETWORK_STATE"
+      ]
+    },
+    "scheme": "gayme",
+    "extra": {
+      "eas": {
+        "projectId": "bc04317d-4036-496f-94a2-cfed0b938e5e"
+      }
+    }
+  }
+}

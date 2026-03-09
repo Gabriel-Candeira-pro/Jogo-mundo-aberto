@@ -1,0 +1,12 @@
+{
+  "expo": {
+    "extra": {
+      "eas": {
+        "projectId": "961f6fef-ea89-4085-a401-cfa330f7afb5"
+      }
+    },
+    "android": {
+      "package": "com.gabrielcandeira.gaymemonorepo"
+    }
+  }
+}

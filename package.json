@@ -1,10 +1,11 @@
 {
-  "name": "gayme",
+  "name": "gaymer",
   "version": "1.0.0",
   "description": "Jogo Phaser responsivo - Mobile e Desktop",
   "main": "index.js",
   "scripts": {
     "dev": "webpack serve --mode development --open",
+    "dev:ngrok": "node scripts/ngrok.js",
     "build": "webpack --mode production",
     "start": "http-server . -c-1 -o"
   },
@@ -16,7 +17,8 @@
     "webpack": "^5.88.0",
     "webpack-cli": "^5.1.4",
     "webpack-dev-server": "^4.15.1",
-    "http-server": "^14.1.1"
+    "http-server": "^14.1.1",
+    "ngrok": "^5.0.0"
   },
   "dependencies": {
     "phaser": "^3.55.2"

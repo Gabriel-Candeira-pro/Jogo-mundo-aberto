@@ -57,6 +57,29 @@ npm run dev
 npm run build
 ```
 
+## 🌐 Compartilhar Publicament e com ngrok
+
+Para acessar seu jogo de qualquer lugar usando ngrok:
+
+### Pré-requisito
+- Ter uma conta no [ngrok](https://ngrok.com) (gratuita)
+- Fazer login: `ngrok authtoken SEU_TOKEN`
+
+### Executar com ngrok
+
+```bash
+npm run dev:ngrok
+```
+
+Isso irá:
+1. ✅ Iniciar o servidor webpack de desenvolvimento na porta 8080
+2. ✅ Ativar um túnel ngrok automático
+3. ✅ Exibir a URL pública (ex: `https://abc123def456.ngrok.io`)
+
+Compartilhe a URL pública para outros acessarem seu jogo de qualquer lugar!
+
+**Dica**: A URL é regenerada cada vez que você executa o comando. Se precisar de uma URL permanente, upgrade sua conta ngrok.
+
 ## 📁 Estrutura do Projeto
 
 ```
@@ -131,5 +154,3 @@ Para expandir o jogo, considere adicionar:
 - Leaderboard local
 
 ---
-
-**Desenvolvido com ❤️ usando Phaser 3**

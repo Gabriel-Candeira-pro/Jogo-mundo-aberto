@@ -1,52 +1,76 @@
 # Sistema de Dados
 
-Este diretório contém o sistema completo de armazenamento de dados do jogo.
+Este diretório concentra a camada de dados do jogo: autenticação, cliente HTTP, modelos e gerenciadores de estado.
 
-## 📁 Estrutura
+## Estrutura Atual
 
-```
+```text
 data/
-├── DataManager.js      # Gerenciador principal de armazenamento
-├── index.js            # Exports centralizados
-├── examples.js         # Exemplos de uso (console)
+├── APIClient.js                    # Cliente HTTP modular para backend (/api)
+├── AuthManager.js                  # Login, registro, verificação e sessão
+├── DataManager.js                  # Gerenciador local legado (localStorage)
+├── DataManagerHybrid.js            # Gerenciador principal (multiplayer online)
+├── index.js                        # Exports centralizados (modo legado)
+├── api/                            # Módulos do APIClient
+│   ├── core/APIClientCore.js
+│   └── modules/
+│       ├── auth.js
+│       ├── backup.js
+│       ├── character.js
+│       ├── health.js
+│       ├── map.js
+│       ├── session.js
+│       └── user.js
+├── manager/                        # Módulos do DataManager legado
+├── managerHybrid/                  # Módulos do DataManagerHybrid
+│   ├── core/HybridDataManagerCore.js
+│   └── modules/
+│       ├── initialization.js
+│       ├── multiplayer.js
+│       ├── user.js
+│       ├── character.js
+│       ├── map.js
+│       ├── session.js
+│       └── utility.js
 └── models/
-    ├── Character.js    # Modelo de personagem
-    ├── User.js         # Modelo de usuário
-    └── Map.js          # Modelo de mapa
+    ├── Character.js
+    ├── User.js
+    └── Map.js
 ```
 
-## 🚀 Uso Rápido
+## Fluxo Recomendado (Atual)
+
+No jogo multiplayer, use `DataManagerHybrid`.
 
 ```javascript
-import { dataManager } from './data/DataManager.js';
+import { dataManager } from './data/DataManagerHybrid.js';
 
-// Acessar dados
+// Aguarda inicialização online (auth + carga remota + entrada no multiplayer)
+await dataManager.waitForInit();
+
 const character = dataManager.getCharacter();
 const user = dataManager.getUser();
 const map = dataManager.getMap();
 
-// Atualizar dados
-dataManager.updateCharacter({ speed: 200 });
-dataManager.updateUser({ username: 'ProGamer' });
-
-// Criar mapa customizado
-const newMap = dataManager.createCustomMap({
-    name: 'Meu Nível',
-    difficulty: 'hard'
-});
-dataManager.setCurrentMap(newMap);
+// Sessão de jogo
+const session = dataManager.startGameSession();
+dataManager.updateSession({ jumps: 10, starsCollected: 3 });
 ```
 
-## 📚 Documentação
+## Modos de Operação
 
-Veja o arquivo [GUIA_DADOS.md](../../GUIA_DADOS.md) na raiz do projeto para documentação completa.
+- `DataManagerHybrid.js`: modo multiplayer online obrigatório, com sincronização no backend.
+- `DataManager.js`: modo legado baseado em `localStorage` (mantido por compatibilidade).
 
-## 🎮 Integração com o Jogo
+## Persistência de Dados
 
-O sistema já está integrado com `GameScene.js` e salva automaticamente:
-- Dados do personagem (velocidade, cor, XP)
-- Dados do usuário (pontuação, estatísticas)
-- Configuração do mapa (plataformas, inimigos)
-- Sessão de jogo (pulos, estrelas coletadas)
+- Dados principais do jogo (usuário, personagem, mapa global e sessão multiplayer) vêm do backend.
+- `localStorage` ainda pode ser usado em pontos auxiliares, como cache de dados de autenticação no cliente.
 
-Todos os dados são persistidos no `localStorage` do navegador.
+## Documentação
+
+Veja também:
+
+- `GUIA_DADOS.md`
+- `INSTALACAO_BACKEND.md`
+- `MULTIPLAYER.md`

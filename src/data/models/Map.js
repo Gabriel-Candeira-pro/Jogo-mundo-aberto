@@ -21,6 +21,20 @@ export class Map {
         this.completed = data.completed || false;
         this.createdAt = data.createdAt || new Date().toISOString();
         this.customSettings = data.customSettings || {};
+
+        // Campos específicos para jogo top-down (multiplayer)
+        this.gameType = data.gameType || 'platformer'; // 'platformer' ou 'topdown'
+        this.buildings = data.buildings || [];
+        this.roads = data.roads || [];
+        this.obstacles = data.obstacles || [];
+        this.water = data.water || [];
+        this.npcs = data.npcs || [];
+        this.collectibles = data.collectibles || [];
+        this.terrain = data.terrain || null;
+        this.skyColor = data.skyColor || this.backgroundColor;
+        this.completions = data.completions || 0;
+        this.bestTime = data.bestTime || 0;
+        this.updatedAt = data.updatedAt || this.createdAt;
     }
 
     /**
@@ -190,7 +204,20 @@ export class Map {
             maxScore: this.maxScore,
             completed: this.completed,
             createdAt: this.createdAt,
-            customSettings: this.customSettings
+            customSettings: this.customSettings,
+            // Campos top-down
+            gameType: this.gameType,
+            buildings: this.buildings,
+            roads: this.roads,
+            obstacles: this.obstacles,
+            water: this.water,
+            npcs: this.npcs,
+            collectibles: this.collectibles,
+            terrain: this.terrain,
+            skyColor: this.skyColor,
+            completions: this.completions,
+            bestTime: this.bestTime,
+            updatedAt: this.updatedAt
         };
     }
 

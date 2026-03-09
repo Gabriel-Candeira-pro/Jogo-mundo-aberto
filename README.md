@@ -1,10 +1,44 @@
 # Gayme - Jogo Multiplayer Online 🌍
 
+![Version](https://img.shields.io/badge/version-2.0.0-blue)
+![Phaser](https://img.shields.io/badge/Phaser-3.55-purple)
+![Node](https://img.shields.io/badge/Node-14+-green)
+![License](https://img.shields.io/badge/license-MIT-yellow)
+
 > **IMPORTANTE:** este jogo é exclusivamente multiplayer.
 > Todos os jogadores compartilham o mesmo mapa global.
 > Login obrigatório - não há mais modo offline.
 
 [Leia a documentação completa do Multiplayer](MULTIPLAYER.md)
+
+## 📑 Índice
+
+- [Requisitos](#️-requisitos)
+- [Modo Multiplayer](#-modo-multiplayer)
+- [Backend Multiplayer](#-backend-multiplayer)
+- [Características](#-características)
+- [Como Jogar](#-como-jogar)
+- [Scripts Disponíveis](#-scripts-disponíveis)
+- [Quick Start](#-quick-start)
+- [Compartilhar Publicamente](#-compartilhar-publicamente)
+- [Sistema de Armazenamento](#-sistema-de-armazenamento-de-dados)
+- [Arquitetura](#️-arquitetura)
+- [Estrutura do Projeto](#️-estrutura-do-projeto-arquitetura-modular)
+- [Teste em Smartphone](#-teste-em-smartphone)
+- [Troubleshooting](#-troubleshooting)
+- [Endpoints da API](#-endpoints-da-api)
+- [Tecnologias](#-tecnologias)
+- [Recursos](#-recursos)
+
+---
+
+## ⚙️ Requisitos
+
+- Node.js 14+ 
+- npm ou yarn
+- Navegador moderno (Chrome, Firefox, Safari, Edge)
+- Porta 3000 livre (backend)
+- Porta 8080 livre (frontend)
 
 ---
 
@@ -44,7 +78,13 @@ Quick start:
 
 ```bash
 npm install
-npm run full
+npm run full  # Roda backend + frontend simultaneamente
+```
+
+Para limpar cache e reinstalar:
+
+```bash
+./full-clean.sh  # Remove node_modules e reinstala dependências
 ```
 
 Documentação complementar:
@@ -74,7 +114,19 @@ Documentação complementar:
 - Toque na parte superior: pular
 - Objetivo: coletar estrelas e evitar inimigos
 
-## 🚀 Quick Start
+## � Scripts Disponíveis
+
+| Script | Descrição |
+|--------|-----------|
+| `npm run full` | Roda backend + frontend simultaneamente (recomendado) |
+| `npm run dev` | Inicia frontend (webpack dev server) na porta 8080 |
+| `npm run dev:server` | Inicia backend em modo desenvolvimento (nodemon) |
+| `npm run dev:ngrok` | Expõe o jogo publicamente via ngrok |
+| `npm run server` | Inicia backend em modo produção |
+| `npm run build` | Gera build de produção do frontend |
+| `./full-clean.sh` | Remove node_modules e reinstala dependências |
+
+## �🚀 Quick Start
 
 ### Opção 1: rodar tudo junto (recomendado)
 
@@ -138,13 +190,35 @@ O armazenamento é orientado a servidor para manter progresso por conta.
 - Login obrigatório
 - Backend ativo durante a partida
 
-## 🗂️ Estrutura do Projeto (Nova Arquitetura)
+## 🏗️ Arquitetura
+
+### Camada de Dados (src/data/)
+
+O projeto utiliza uma arquitetura em camadas para gerenciamento de dados:
+
+- **APIClient**: Cliente HTTP para comunicação com o backend
+- **AuthManager**: Gerenciamento de sessão e autenticação JWT
+- **DataManager**: Gerenciador local com fallback para localStorage
+- **DataManagerHybrid**: Orquestrador que combina API + localStorage
+- **Models**: Entidades de domínio (Character, User, Map)
+
+### Modularização
+
+Código organizado em módulos focados:
+- **Core**: Funcionalidade base e classes principais
+- **Modules**: Funcionalidades específicas separadas por responsabilidade
+- **Utils**: Utilitários e helpers reutilizáveis
+
+Veja os READMEs em cada diretório para mais detalhes.
+
+## 🗂️ Estrutura do Projeto (Arquitetura Modular)
 
 ```text
 Gayme/
 ├── index.html                     # Entrada HTML do cliente
 ├── package.json                   # Scripts e dependências
 ├── webpack.config.js              # Build do frontend
+├── full-clean.sh                  # Script de limpeza e reinstalação
 ├── README.md                      # Documentação principal
 ├── MULTIPLAYER.md                 # Guia do modo multiplayer
 ├── QUICKSTART.md                  # Setup rápido
@@ -169,7 +243,28 @@ Gayme/
     ├── scenes/
     │   ├── PreloadScene.js        # Carregamento de assets
     │   ├── LoginScene.js          # Login e registro obrigatórios
-    │   └── GameScene.js           # Loop principal e HUD multiplayer
+    │   ├── GameScene.js           # Loop principal e HUD multiplayer
+    │   └── gameScene/             # Módulos do GameScene
+    │       ├── README.md
+    │       ├── core/
+    │       │   └── GameSceneCore.js
+    │       └── modules/
+    │           ├── data/
+    │           │   ├── initialization.js
+    │           │   ├── lifecycle.js
+    │           │   └── multiplayer.js
+    │           ├── input/
+    │           │   └── controls.js
+    │           ├── map/
+    │           │   ├── collision.js
+    │           │   └── renderer.js
+    │           ├── player/
+    │           │   ├── movement.js
+    │           │   └── setup.js
+    │           └── ui/
+    │               ├── hud.js
+    │               ├── instructions.js
+    │               └── resize.js
     ├── utils/
     │   └── controls.js            # Controles desktop e mobile
     └── data/
@@ -179,6 +274,7 @@ Gayme/
         ├── DataManager.js         # Manager local/fallback
         ├── DataManagerHybrid.js   # Orquestração cliente + backend
         ├── examples.js            # Exemplos de uso no console
+        ├── README.md              # Documentação da camada de dados
         ├── models/
         │   ├── Character.js       # Entidade de personagem
         │   ├── User.js            # Entidade de usuário
@@ -194,12 +290,24 @@ Gayme/
         │       ├── map.js
         │       ├── session.js
         │       └── user.js
-        └── manager/
+        ├── manager/
+        │   ├── core/
+        │   │   └── DataManagerCore.js
+        │   └── modules/
+        │       ├── character.js
+        │       ├── map.js
+        │       ├── session.js
+        │       ├── user.js
+        │       └── utility.js
+        └── managerHybrid/
+            ├── README.md
             ├── core/
-            │   └── DataManagerCore.js
+            │   └── HybridDataManagerCore.js
             └── modules/
                 ├── character.js
+                ├── initialization.js
                 ├── map.js
+                ├── multiplayer.js
                 ├── session.js
                 ├── user.js
                 └── utility.js
@@ -207,31 +315,116 @@ Gayme/
 
 ## 📱 Teste em Smartphone
 
-1. Local Network:
-- Rode `npm run dev`
-- Acesse pelo IP da máquina na porta `8080`
+### 1. Local Network (mesma rede Wi-Fi)
+- Rode `npm run full`
+- Descubra o IP da sua máquina: `hostname -I` (Linux) ou `ipconfig` (Windows)
+- Acesse pelo IP da máquina na porta `8080` (ex: `http://192.168.1.100:8080`)
 
-2. Com Cloudflare Tunnel (recomendado):
+### 2. Com Cloudflare Tunnel (recomendado para acesso externo)
 
 ```bash
 cloudflared tunnel --url http://localhost:8080
 ```
 
-3. Para melhor experiência:
+### 3. Com ngrok (alternativa)
+
+```bash
+npm run dev:ngrok
+```
+
+### 4. Para melhor experiência
 - Use modo fullscreen do navegador
 - Prefira orientação landscape
+- Limpe o cache se encontrar problemas
+
+## 🔧 Troubleshooting
+
+### Backend não inicia
+- Verifique se a porta 3000 está livre: `lsof -i :3000` (Linux/Mac)
+- Execute `./full-clean.sh` para reinstalar dependências
+
+### Frontend não conecta ao backend
+- Confirme que o backend está rodando em `http://localhost:3000`
+- Verifique o console do navegador para erros de CORS
+- Confirme que ambos estão na mesma rede (para testes mobile)
+
+### Erros de autenticação
+- Limpe o localStorage do navegador
+- Crie uma nova conta se necessário
+- Verifique os logs do backend no terminal
+
+### Performance ruim em mobile
+- Feche outras abas do navegador
+- Teste em modo anônimo/privado
+- Verifique a conexão de internet
+
+## 📡 Endpoints da API
+
+Para mais detalhes, consulte [server/README.md](server/README.md) ou execute:
+
+```bash
+./server/test-api.sh  # Testa todos os endpoints
+```
+
+Principais endpoints:
+- `POST /api/auth/register` - Criar conta
+- `POST /api/auth/login` - Fazer login
+- `GET /api/user/:userId` - Dados do usuário
+- `GET /api/character/:userId` - Dados do personagem
+- `GET /api/map/global` - Mapa global
+- `POST /api/session/heartbeat` - Manter sessão ativa
 
 ## 🧰 Tecnologias
 
-- Phaser 3.55
-- Vanilla JavaScript
-- Node.js + Express
-- JWT + bcryptjs
-- Webpack
+### Frontend
+- Phaser 3.55 - Engine de jogos HTML5
+- Vanilla JavaScript (ES6+)
+- Webpack 5 - Bundler e dev server
+
+### Backend
+- Node.js + Express - API REST
+- JWT (jsonwebtoken) - Autenticação
+- bcryptjs - Criptografia de senhas
+- CORS - Comunicação cross-origin
+
+### Desenvolvimento
+- Webpack Dev Server - Hot reload
+- Nodemon - Auto-restart do backend
+- Concurrently - Rodar múltiplos processos
+- ngrok - Túnel público para testes
 
 ## 📚 Recursos
 
 - [Documentação Phaser](https://photonstorm.github.io/phaser3-docs/)
 - [Exemplos Phaser](https://phaser.io/examples)
+- [Express.js Guide](https://expressjs.com/)
+- [JWT Introduction](https://jwt.io/introduction)
+
+## 📝 Documentação Adicional
+
+- [MULTIPLAYER.md](MULTIPLAYER.md) - Guia completo do modo multiplayer
+- [QUICKSTART.md](QUICKSTART.md) - Início rápido passo a passo
+- [GUIA_DADOS.md](GUIA_DADOS.md) - Sistema de gerenciamento de dados
+- [INSTALACAO_BACKEND.md](INSTALACAO_BACKEND.md) - Configuração detalhada do backend
+- [server/README.md](server/README.md) - Documentação da API REST
+- [src/data/README.md](src/data/README.md) - Camada de dados do frontend
+
+## 🤝 Contribuindo
+
+Contribuições são bem-vindas! Para contribuir:
+
+1. Fork o projeto
+2. Crie uma branch para sua feature (`git checkout -b feature/MinhaFeature`)
+3. Commit suas mudanças (`git commit -m 'Adiciona MinhaFeature'`)
+4. Push para a branch (`git push origin feature/MinhaFeature`)
+5. Abra um Pull Request
+
+## 📄 Licença
+
+Este projeto está sob a licença MIT. Veja o arquivo LICENSE para mais detalhes.
+
+---
+
+**Desenvolvido com ❤️ usando Phaser 3**
 
 ---

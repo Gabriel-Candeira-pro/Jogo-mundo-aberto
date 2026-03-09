@@ -19,6 +19,12 @@ const DATA_DIR = path.join(__dirname, 'data');
 app.use(cors());
 app.use(express.json());
 
+// Adiciona header necessário para acesso via túneis VS Code devtunnels
+app.use((req, res, next) => {
+    res.setHeader('X-Tunnel-Skip-Browser-Warning', 'true');
+    next();
+});
+
 // Logging middleware
 app.use((req, res, next) => {
     console.log(`[${new Date().toISOString()}] ${req.method} ${req.path}`);

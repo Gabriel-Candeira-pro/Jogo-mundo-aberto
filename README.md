@@ -4,7 +4,8 @@
 > Todos os jogadores compartilham o mesmo mapa global.  
 > Login obrigatório - Não há mais modo offline.
 
-📖 **[Leia a documentação completa do Multiplayer](MULTIPLAYER.md)**
+📖 **[Leia a documentação completa do Multiplayer](MULTIPLAYER.md)**  
+🌍 **[Como o Mundo é Construído](MUNDO.md)**
 
 ---
 
@@ -49,7 +50,7 @@ npm run full
 # Abra http://localhost:8080 → Login/Registro
 ```
 
-📖 **Documentação:** [QUICKSTART.md](QUICKSTART.md) | [server/README.md](server/README.md) | [INSTALACAO_BACKEND.md](INSTALACAO_BACKEND.md)
+📖 **Documentação:** [QUICKSTART.md](QUICKSTART.md) | [server/README.md](server/README.md) | [INSTALACAO_BACKEND.md](INSTALACAO_BACKEND.md) | [MUNDO.md](MUNDO.md)
 
 ---
 
@@ -291,6 +292,7 @@ Gayme/
 ├── QUICKSTART.md                  # Setup rápido
 ├── GUIA_DADOS.md                  # Documentação do sistema de dados
 ├── INSTALACAO_BACKEND.md          # Instalação/configuração do backend
+├── MUNDO.md                       # Como o mundo é construído
 ├── scripts/
 │   └── ngrok.js                   # Exposição pública local via ngrok
 ├── server/

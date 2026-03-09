@@ -6,8 +6,9 @@ Um jogo 2D criado com Phaser que funciona perfeitamente em **mobile** e **deskto
 
 - ✅ **Responsivo**: Funciona em qualquer tamanho de tela (mobile, tablet, desktop)
 - ✅ **Multi-input**: Suporte a teclado (desktop) e touch (mobile)
-- ✅ **Auto-scaling**: Jogo se adapta automaticamente ao redimensionar a janela
-- ✅ **Sem dependências externas**: Usa Phaser via CDN
+- ✅ **Auto-scaling**: Jogo se adapta automaticamente ao redimensionar a janela (escala FIT)
+- ✅ **Arquitetura modular**: Cenas e configurações organizadas em arquivos separados
+- ✅ **Otimizado**: Phaser 3.55 com webpack para melhor performance
 - ✅ **Pronto para jogar**: Exemplo completo de jogo jogável
 
 ## 📋 Como Jogar
@@ -57,59 +58,84 @@ npm run dev
 npm run build
 ```
 
-## 🌐 Compartilhar Publicament e com ngrok
+## 🌐 Compartilhar Publicamente com ngrok
 
-Para acessar seu jogo de qualquer lugar usando ngrok:
+Para acessar seu jogo de qualquer lugar usando ngrok (recomendado para teste remoto):
 
-### Pré-requisito
+### Pré-requisitos
 - Ter uma conta no [ngrok](https://ngrok.com) (gratuita)
-- Fazer login: `ngrok authtoken SEU_TOKEN`
+- ngrok instalado e autenticado: `ngrok authtoken SEU_TOKEN`
+- As dependências do projeto instaladas: `npm install`
 
 ### Executar com ngrok
 
 ```bash
+# Método 1: Usar o script automático (recomendado)
 npm run dev:ngrok
+
+# Método 2: Executar manualmente
+node scripts/ngrok.js
 ```
 
-Isso irá:
-1. ✅ Iniciar o servidor webpack de desenvolvimento na porta 8080
-2. ✅ Ativar um túnel ngrok automático
-3. ✅ Exibir a URL pública (ex: `https://abc123def456.ngrok.io`)
+**O que acontece automaticamente:**
+1. ✅ Compila o webpack em modo desenvolvimento
+2. ✅ Inicia servidor de desenvolvimento na porta 8080
+3. ✅ Cria um túnel ngrok automático
+4. ✅ Exibe a URL pública (ex: `https://abc123def456.ngrok.io`)
+5. ✅ Monitora alterações e recarrega automáticamente
 
-Compartilhe a URL pública para outros acessarem seu jogo de qualquer lugar!
+**Como usar:**
+- Compartilhe a URL pública com qualquer pessoa
+- Qualquer pessoa pode jogar sem instalar nada
+- A URL muda a cada novo comando (exceto com plano pago ngrok)
 
-**Dica**: A URL é regenerada cada vez que você executa o comando. Se precisar de uma URL permanente, upgrade sua conta ngrok.
+**Dica de ouro**: Manter o terminal aberto enquanto estiver desenvolvendo permite que outras pessoas vejam as mudanças em tempo real!
 
-## 📁 Estrutura do Projeto
+## 📁 Estrutura do Projeto (Arquitetura Modular)
 
 ```
 Gayme/
-├── index.html          # Arquivo HTML principal
-├── package.json        # Dependências npm
-├── README.md          # Este arquivo
+├── index.html                    # Arquivo HTML principal
+├── package.json                  # Dependências npm
+├── webpack.config.js             # Configuração webpack
+├── README.md                     # Este arquivo
+├── scripts/
+│   └── ngrok.js                 # Script para iniciar com ngrok
 └── src/
-    └── game.js        # Código principal do jogo
+    ├── game.js                   # Inicializador do jogo
+    ├── config/
+    │   └── gameConfig.js         # Configuração centralizada (responsividade, física, etc)
+    ├── scenes/
+    │   ├── PreloadScene.js       # Cena de preload (sprites, assets)
+    │   └── GameScene.js          # Cena principal do jogo
+    └── utils/
+        └── controls.js           # Utilitários de controles (teclado, touch)
 ```
 
 ## 🔧 Customizações
 
 ### Mudar tamanho da tela
-Edite a configuração em `src/game.js`:
+Edite a configuração em [src/config/gameConfig.js](src/config/gameConfig.js):
 ```javascript
 scale: {
-    width: 800,    // Largura padrão
-    height: 600,   // Altura padrão
-    // ...
+    width: 800,         // Largura padrão
+    height: 600,        // Altura padrão
+    min: { width: 320, height: 240 },  // Tamanho mínimo
+    max: { width: 1920, height: 1440 } // Tamanho máximo
 }
 ```
 
 ### Ajustar dificuldade
-- Altere `gravity: { y: 300 }` para gravidade
-- Mude velocidade dos inimigos
-- Ajuste velocidade do jogador
+Edite [src/scenes/GameScene.js](src/scenes/GameScene.js):
+- Altere `gravity: { y: 300 }` para mudar a gravidade
+- Mude `velocidade dos inimigos` (propriedade `speed`)
+- Ajuste `velocidade do jogador` (propriedade `Velocity`)
 
 ### Adicionar mais sprites
-Veja a função `PreloadScene.create()` em `src/game.js` para ver como criar gráficos dinâmicos.
+Veja [src/scenes/PreloadScene.js](src/scenes/PreloadScene.js) para ver como criar gráficos dinâmicos.
+
+### Acessar controles
+Personalize os controles em [src/utils/controls.js](src/utils/controls.js)
 
 ## 📱 Teste em Smartphone
 
@@ -143,14 +169,26 @@ Veja a função `PreloadScene.create()` em `src/game.js` para ver como criar gr�
 - [Exemplos Phaser](https://phaser.io/examples)
 - [Community Phaser](https://www.html5gamedevs.com/)
 
-## 📝 Próximos Passos
+## 📝 Novidades nesta Atualização
+
+### ✨ Principais Melhorias
+- 🏗️ **Refatoração modular**: Código organizado em cenas e configurações separadas
+- ⚡ **Webpack integrado**: Build otimizado para produção e desenvolvimento
+- 📱 **Responsividade melhorada**: Escala FIT com suporte completo a múltiplas resoluções
+- 🎮 **Toque otimizado**: Controles touch refinados para melhor experiência mobile
+- 🚀 **ngrok automático**: Script para compartilhar o jogo facilmente
+- 📦 **Organização clara**: Estrutura escalável para adicionar novas features
+
+### 🎯 Próximos Passos
 
 Para expandir o jogo, considere adicionar:
-- Novos níveis
-- Sistema de sons
-- Particle effects
+- Novos níveis com dificuldade progressiva
+- Sistema de sons e música de fundo
+- Particle effects para efeitos visuais
 - Animações mais complexas
-- Sistema de saltos (salas/levels)
-- Leaderboard local
+- Sistema de salas/levels (world/room)
+- Leaderboard local com localStorage
+- Sistema de power-ups
+- Inimigos com IA mais sofisticada
 
 ---

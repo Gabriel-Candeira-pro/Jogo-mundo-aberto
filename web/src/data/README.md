@@ -1,5 +1,11 @@
 # Sistema de Dados
 
+## Novidades: Integração com Chunks Procedurais
+
+- O DataManagerHybrid e o APIClient agora suportam carregamento de chunks procedurais via endpoint `/api/map/chunk?x=&y=`.
+- O frontend mantém um cache de 3x3 chunks ao redor do player, requisitando chunks conforme o jogador transita entre bordas.
+- Apenas alterações (deltas) são persistidas no backend, reduzindo uso de armazenamento.
+
 Este diretório concentra a camada de dados do jogo: autenticação, cliente HTTP, modelos e gerenciadores de estado.
 
 ## Estrutura Atual

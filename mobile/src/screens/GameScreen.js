@@ -59,6 +59,11 @@ export default function GameScreen({ userData, onLogout }) {
       const newPosition = await gameServiceRef.current.movePlayer(direction);
       if (newPosition) {
         setPlayerPosition(newPosition);
+        // Buscar novo mapa/chunk para a posição
+        const newMap = await gameServiceRef.current.fetchMapForPosition(newPosition);
+        if (newMap) {
+          setGameData(prev => ({ ...prev, map: newMap }));
+        }
       }
     }
   };

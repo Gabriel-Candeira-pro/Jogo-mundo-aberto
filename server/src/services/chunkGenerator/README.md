@@ -2,6 +2,13 @@
 
 Módulo responsável pela geração procedural de chunks do mundo do jogo.
 
+## Integração Backend
+O backend expõe o endpoint `/api/map/chunk?x=&y=` que utiliza este módulo para gerar chunks sob demanda, aplicando deltas persistidos (alterações feitas por jogadores).
+
+Cada chunk é gerado por seed, garantindo que o mesmo chunk sempre terá o mesmo conteúdo base, exceto pelas alterações persistidas.
+
+O frontend mantém um cache de 3x3 chunks ao redor do jogador, requisitando chunks conforme o player transita entre bordas.
+
 ## Visão Geral
 Esta pasta contém a lógica para geração de mapas (chunks), biomas, obstáculos, áreas de água e utilidades relacionadas. O código foi modularizado seguindo o princípio da responsabilidade única, facilitando manutenção, testes e extensibilidade.
 

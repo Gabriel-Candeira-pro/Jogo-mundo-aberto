@@ -102,4 +102,22 @@ export class GameService {
     this.character = null;
     this.map = null;
   }
+
+    async fetchMapForPosition(position) {
+      try {
+        // Definir tamanho do chunk (exemplo: 16x16 tiles)
+        const CHUNK_WIDTH = 16;
+        const CHUNK_HEIGHT = 16;
+        // Calcular chunkX e chunkY
+        const chunkX = Math.floor(position.x / CHUNK_WIDTH);
+        const chunkY = Math.floor(position.y / CHUNK_HEIGHT);
+        // Buscar chunk no backend
+        const mapData = await APIService.get(`/api/map/chunk?x=${chunkX}&y=${chunkY}`);
+        this.map = mapData;
+        return mapData;
+      } catch (error) {
+        console.error('Erro ao buscar mapa para posição:', error);
+        return null;
+      }
+    }
 }

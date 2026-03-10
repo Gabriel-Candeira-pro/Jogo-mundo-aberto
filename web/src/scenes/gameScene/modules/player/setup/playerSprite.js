@@ -10,7 +10,7 @@ export function createPlayerSprite(scene, spawn, character) {
     // Depth: acima das camadas do mapa (1-4) e abaixo do HUD (100)
     player.setDepth(10);
     player.setBounce(0);
-    player.setCollideWorldBounds(true);
+    // Removido setCollideWorldBounds para permitir transição de chunk
     player.setTint(character.color);
     
     return player;

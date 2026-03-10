@@ -7,6 +7,10 @@ module.exports = {
     filename: 'bundle.js',
     path: path.resolve(__dirname, 'dist'),
   },
+  resolve: {
+    extensions: ['.js', '.json'],
+    modules: [path.resolve(__dirname, 'src'), 'node_modules'],
+  },
   devServer: {
     static: {
       // Serve only built/static files to avoid reload loops caused by backend data writes.

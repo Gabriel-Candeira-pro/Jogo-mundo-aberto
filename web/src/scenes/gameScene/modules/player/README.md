@@ -1,5 +1,12 @@
 # Módulos do Jogador - Arquitetura Modular
 
+## Novidades: Mundo Procedural por Chunks
+
+- O movimento tile-based agora permite transição automática entre chunks ao cruzar a borda.
+- O estado do jogador inclui coordenadas globais de chunk (`chunkX`, `chunkY`).
+- O cache de chunks mantém sempre os 3x3 chunks ao redor do player, requisitando chunks do backend via API.
+- O sistema de colisão retorna direção de saída para facilitar a troca de chunk.
+
 Este diretório contém todos os módulos relacionados ao jogador, organizados seguindo o **Princípio de Responsabilidade Única (SRP)**.
 
 ## Estrutura

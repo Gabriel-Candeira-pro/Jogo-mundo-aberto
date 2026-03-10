@@ -40,6 +40,7 @@ Gayme/  (Monorepo)
 │   └── package.json                # Deps mobile
 │
 ├── 🖥️  server/                      # Backend Compartilhado (Node.js + Express)
+│   ├── src/services/chunkGenerator/ # Geração procedural de chunks
 │   ├── server.js                   # Servidor principal
 │   ├── data/                       # Banco de dados JSON
 │   │   ├── users/                 # Dados por usuário
@@ -65,6 +66,12 @@ Gayme/  (Monorepo)
 │   ├── README.md                   # Doc original web
 │   ├── MULTIPLAYER.md              # Doc multiplayer
 │   └── GUIA_DADOS.md               # Guia de dados
+
+## Novidades: Mundo Procedural por Chunks
+
+- O mundo agora é dividido em chunks procedurais, gerados sob demanda.
+- O backend expõe o endpoint `/api/map/chunk?x=&y=` para geração e persistência de chunks.
+- O frontend mantém um cache de 3x3 chunks ao redor do player.
 │
 ├── package.json                     # Root (workspaces)
 ├── install.sh                       # Script instalação

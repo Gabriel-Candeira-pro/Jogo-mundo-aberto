@@ -10,8 +10,10 @@ export function checkTileCollision(scene, tileX, tileY) {
     const pixelY = tileY * TILE_SIZE;
     
     // Checar limites do mapa (world bounds)
-    if (isOutOfBounds(scene, pixelX, pixelY)) {
-        return true;
+    const outDir = getOutOfBoundsDirection(scene, pixelX, pixelY);
+    if (outDir) {
+        // Retorna direção de saída para transição de chunk
+        return outDir;
     }
     
     // Criar zona de teste para overlap
@@ -26,15 +28,21 @@ export function checkTileCollision(scene, tileX, tileY) {
 }
 
 function isOutOfBounds(scene, pixelX, pixelY) {
+    // Substituído por getOutOfBoundsDirection
+    // Mantido para compatibilidade, mas não usado
+    return false;
+
+}
+
+// Retorna direção de saída se estiver fora dos limites
+function getOutOfBoundsDirection(scene, pixelX, pixelY) {
     const mapWidth = scene.mapData.width || 800;
     const mapHeight = scene.mapData.height || 600;
-    
-    return (
-        pixelX < 0 || 
-        pixelY < 0 || 
-        pixelX >= mapWidth || 
-        pixelY >= mapHeight
-    );
+    if (pixelX < 0) return 'left';
+    if (pixelX >= mapWidth) return 'right';
+    if (pixelY < 0) return 'up';
+    if (pixelY >= mapHeight) return 'down';
+    return null;
 }
 
 function hasCollisionWithGroup(group, testZone) {

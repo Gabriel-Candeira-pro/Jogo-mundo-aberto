@@ -1,5 +1,12 @@
 # GameScene Modular
 
+## Novidades: Mundo Procedural por Chunks
+
+- O mapa agora é dividido em chunks procedurais, gerados sob demanda.
+- O player transita entre chunks automaticamente ao cruzar a borda.
+- O cache de chunks mantém sempre os 3x3 chunks ao redor do player.
+- O backend expõe o endpoint `/api/map/chunk?x=&y=` para geração e persistência de chunks.
+
 Estrutura modular da cena principal do jogo, seguindo o mesmo padrao de composicao usado em `DataManagerHybrid` e `APIClient`.
 
 Refatorado seguindo o **Principio da Responsabilidade Unica (SRP)** - cada modulo tem uma responsabilidade especifica.

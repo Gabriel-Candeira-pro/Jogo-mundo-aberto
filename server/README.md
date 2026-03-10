@@ -1,5 +1,12 @@
 # Backend API - Gayme
 
+## Novidades: Mundo Procedural por Chunks
+
+- O backend expõe o endpoint `/api/map/chunk?x=&y=` para geração procedural de chunks.
+- Cada chunk é gerado por seed, com bioma, obstáculos e água.
+- Alterações feitas por jogadores são persistidas como deltas.
+- Apenas chunks alterados ocupam espaço em disco.
+
 Sistema de backend para armazenamento de dados em servidor com autenticação.
 
 ## 🚀 Quick Start

@@ -6,7 +6,6 @@ export function initTileMovementState(scene, mapData) {
     scene.tileMovement = {
         TILE_SIZE: 16,
         MOVE_DURATION: 300, // ms para se mover de um tile para outro
-        
         // Estado do movimento
         isMoving: false,
         moveStartTime: 0,
@@ -14,7 +13,8 @@ export function initTileMovementState(scene, mapData) {
         currentTileY: 0,
         nextTileX: 0,
         nextTileY: 0,
-        
+        chunkX: 0,
+        chunkY: 0,
         debug: false  // Desativado para reduzir spam de logs
     };
     
@@ -22,6 +22,9 @@ export function initTileMovementState(scene, mapData) {
     const spawn = mapData.playerSpawn;
     scene.tileMovement.currentTileX = Math.round(spawn.x / scene.tileMovement.TILE_SIZE);
     scene.tileMovement.currentTileY = Math.round(spawn.y / scene.tileMovement.TILE_SIZE);
+    // Inicializa chunkX e chunkY
+    scene.tileMovement.chunkX = 0;
+    scene.tileMovement.chunkY = 0;
     
     console.info('[TileMovement] Sistema inicializado', {
         tileX: scene.tileMovement.currentTileX,

@@ -20,7 +20,8 @@ yarn-error.log*
 *.swp
 
 # IDE
-.vscode/
+.vscode/*
+!.vscode/settings.json
 .idea/
 
 # Expo

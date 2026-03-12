@@ -57,11 +57,12 @@ export function attachTileBasedMovementMethods(GameSceneClass) {
         
         // Checar colisão ou transição de chunk
         const collisionResult = checkTileCollision(this, nextTileX, nextTileY);
-        if (typeof collisionResult === 'string') {
-            // Direção de saída: transição de chunk
+            if (typeof collisionResult === 'string') {
+                console.log('[TileMovement] Direção de saída detectada:', collisionResult, { nextTileX, nextTileY });
+                console.log('[TileMovement] Chamando handleChunkTransition');
                 this.handleChunkTransition(collisionResult);
-            consumeKeyPress(keyToConsume);
-            return;
+                consumeKeyPress(keyToConsume);
+                return;
         } else if (collisionResult === true) {
             // Colisão normal
             consumeKeyPress(keyToConsume);
@@ -134,6 +135,8 @@ export function attachTileBasedMovementMethods(GameSceneClass) {
                     apiClient.request(`/api/map/chunk?x=${cx}&y=${cy}`)
                         .then(resp => {
                             if (resp && resp.chunk) {
+                                    console.log('[ChunkLoader] Chunk recebido ao atravessar borda:', resp.chunk);
+                                    console.log('[ChunkLoader] Coordenadas solicitadas:', cx, cy);
                                 this.chunkCache[key] = { ...resp.chunk, chunkX: cx, chunkY: cy, loading: false };
                                 if (cx === chunkX && cy === chunkY) {
                                     // Atualiza o mapa central e renderiza

@@ -77,6 +77,14 @@ export class APIClientCore {
             const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
 
             try {
+                // Log de requisição para depuração de chunks
+                try {
+                    if (endpoint && endpoint.indexOf && endpoint.indexOf('/api/map/chunk') !== -1) {
+                        console.log(`[APIClient] Requisição -> ${url}`);
+                    }
+                } catch (e) {
+                    // ignore
+                }
                 const response = await fetch(url, {
                     ...fetchOptions,
                     headers,
@@ -90,6 +98,15 @@ export class APIClientCore {
 
                 if (!response.ok) {
                     throw new Error(data.error || 'Erro na requisição');
+                }
+
+                // Log de resposta para requisições de chunk
+                try {
+                    if (endpoint && endpoint.indexOf && endpoint.indexOf('/api/map/chunk') !== -1) {
+                        console.log(`[APIClient] Resposta <- ${url}`, data);
+                    }
+                } catch (e) {
+                    // ignore
                 }
 
                 return data;

@@ -12,15 +12,21 @@ function generateChunk(worldSeed, chunkX, chunkY, chunkConfig = {}) {
     const config = { ...DEFAULT_CHUNK_CONFIG, ...chunkConfig };
     const seed = createChunkSeed(worldSeed, chunkX, chunkY);
     const random = mulberry32(seed);
-    const biome = pickBiome(random);
-    const obstacles = [];
-    const obstacleCount = randomInt(random, config.minObstacles, config.maxObstacles);
-    for (let i = 0; i < obstacleCount; i += 1) {
-        const obstacle = createObstacle(random, config, biome, i, obstacles);
-        if (obstacle) {
-            obstacles.push(obstacle);
-        }
+    let biome = pickBiome(random);
+    // Segurança: garanta que o biome retornado é válido e pertence à lista BIOMES
+    if (!biome || !biome.id || !BIOMES.find(b => b.id === biome.id)) {
+        // Fallback determinístico para o primeiro bioma definido
+        biome = BIOMES[0];
     }
+    // Execute a lógica específica do bioma para gerar dados contextuais
+    const biomeGenerated = (typeof biome.generate === 'function')
+        ? biome.generate(random, { config, width: config.tilesX * config.tileSize, height: config.tilesY * config.tileSize })
+        : {};
+    // Mescla propriedades estáticas do bioma com os dados gerados dinamicamente
+    const biomeContext = { ...biome, ...biomeGenerated };
+    // Obstáculos: agora são gerados pelo próprio bioma (se fornecer `obstacles` em `biome.generate`).
+    // Mantemos compatibilidade: se o bioma não fornecer obstáculos, não geramos globalmente.
+    const obstacles = Array.isArray(biomeContext.obstacles) ? biomeContext.obstacles : [];
     const water = createWaterAreas(random, config);
     const meta = buildChunkMeta({ worldSeed, chunkX, chunkY, config, biome, generatorVersion: GENERATOR_VERSION });
     return {

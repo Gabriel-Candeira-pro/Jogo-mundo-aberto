@@ -42,13 +42,26 @@ export function attachMapRenderMethods(GameSceneClass) {
     };
 
     GameSceneClass.prototype.renderObstacles = function renderObstacles() {
-        if (this.mapData.obstacles && this.mapData.obstacles.length > 0) {
-            this.mapData.obstacles.forEach(obstacle => {
-                const color = obstacle.type === 'tree' ? 0x228B22 : 0x808080;
+        const obs = this.mapData.obstacles || [];
+        console.log('[Render] Obstáculos encontrados:', obs.length);
+        if (obs.length > 0) {
+            obs.forEach(obstacle => {
+                const typeColorMap = {
+                    tree: 0x228B22,
+                    bush: 0x2E8B57,
+                    big_tree: 0x006400,
+                    rock: 0x808080,
+                    cactus: 0x9ACD32,
+                    ice_rock: 0xB0E0E6,
+                    bare_tree: 0x8B4513
+                };
+                const color = typeColorMap[obstacle.type] || 0xAAAAAA;
                 const centerX = obstacle.x + obstacle.width / 2;
                 const centerY = obstacle.y + obstacle.height / 2;
-                const rect = this.add.rectangle(centerX, centerY, obstacle.width, obstacle.height, color);
+                const rect = this.add.rectangle(centerX, centerY, Math.max(2, obstacle.width), Math.max(2, obstacle.height), color);
                 rect.setDepth(3);
+                // desenhar contorno para maior visibilidade
+                rect.setStrokeStyle(1, 0x000000);
             });
         }
     };

@@ -15,7 +15,7 @@ Esta pasta contém a lógica para geração de mapas (chunks), biomas, obstácul
 ## Estrutura dos Arquivos
 
 - **index.js**: Função principal `generateChunk` e exportação central do módulo.
-- **biomes.js**: Definição dos biomas disponíveis e função para seleção aleatória de bioma.
+-- **biomes/**: Pasta contendo cada bioma em um arquivo separado e um `index.js` que agrega e expõe os biomas.
 - **chunkUtils.js**: Utilidades para manipulação de posições, seeds e configuração padrão de chunk.
 - **meta.js**: Função para construir os metadados do chunk.
 - **obstacles.js**: Funções para geração de obstáculos e áreas de água, além de detecção de colisão.
@@ -43,7 +43,7 @@ console.log(chunk);
 ```
 
 ## Extensibilidade
-- Para adicionar novos biomas, edite `biomes.js`.
+- Para adicionar novos biomas, crie um novo arquivo em `biomes/` exportando o objeto do bioma (com `id`, propriedades visuais e uma função `generate(random, options)`); o `biomes/index.js` irá agregá-lo automaticamente.
 - Para alterar regras de obstáculos ou lagos, edite `obstacles.js`.
 - Para mudar configurações padrão, edite `chunkUtils.js`.
 
